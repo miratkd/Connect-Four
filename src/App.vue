@@ -1,8 +1,5 @@
 <template>
-  <div>
-    <router-view/>
-    
-  </div>
+  <router-view/>
 </template>
 
 <style>
@@ -14,6 +11,7 @@ body{
   margin: 0;
   font-size: 1vw;
   font-family: Space Grotesk;
+  background-color: #5C2DD5;
 }
 h1{
   text-shadow: 3px 3px 4px gray;
