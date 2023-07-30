@@ -51,4 +51,14 @@ p{
   opacity: 0.6;
   margin: 0;
 }
+@media screen and (max-width: 1050px) and (orientation: Portrait) {
+  body{
+    font-size: 2vw;
+  }
+}
+@media screen and (max-width: 550px) and (orientation: Portrait) {
+  body{
+    font-size: 3vw;
+  }
+}
 </style>
