@@ -24,7 +24,7 @@ export default {
             console.log('player');
         },
         rulesClick () {
-            console.log('rules');
+            this.$router.push('/regras')
         }
     }
 }
@@ -35,6 +35,7 @@ export default {
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-color: #5C2DD5;
 }
 .main-menu-body{
     background-color: #7945FF;
