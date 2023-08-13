@@ -89,4 +89,16 @@ h3{
 .rules-check-icon{
     font-size: 2.5em;
 }
+
+@media screen and (max-width: 1050px) and (orientation: Portrait) {
+  .rules-modal{
+    width: 60vw;
+  }
+}
+
+@media screen and (max-width: 550px) and (orientation: Portrait) {
+    .rules-modal{
+        width: 90vw;
+    }
+}
 </style>
