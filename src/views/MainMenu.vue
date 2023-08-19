@@ -18,10 +18,10 @@ export default {
     },
     methods:{
         cpuClick () {
-            console.log('cpu');
+            this.$router.push('/partida')
         },
         playerClick () {
-            console.log('player');
+            this.$router.push('/partida')
         },
         rulesClick () {
             this.$router.push('/regras')

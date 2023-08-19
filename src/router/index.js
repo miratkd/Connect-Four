@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import MainMenu from '../views/MainMenu.vue'
 import Rules from '../views/Rules.vue'
+import Math from '../views/Math.vue'
 
 const routes = [
   {
@@ -12,6 +13,11 @@ const routes = [
     path: '/regras',
     name: 'rulesPage',
     component: Rules
+  },
+  {
+    path: '/partida',
+    name: 'mathPage',
+    component: Math
   },
 ]
 
