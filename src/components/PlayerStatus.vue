@@ -4,14 +4,14 @@
         <img v-if="player == '2'" class="player-status-icon" src="@/assets/player-two.svg" alt="">
         <img v-if="player == 'cpu'" class="player-status-icon" src="@/assets/cpu.svg" alt="">
         <h3 style="margin-top: 1vh;">{{ name }}</h3>
-        <h1>1</h1>
+        <h1>{{ score }}</h1>
     </div>
 </template>
 
 <script>
 export default {
     name: 'PlayerStatus',
-    props:['player', 'name']
+    props:['player', 'name', 'score']
 }
 </script>
 

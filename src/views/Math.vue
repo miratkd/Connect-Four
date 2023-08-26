@@ -3,22 +3,30 @@
         <div class="math-header-container">
             <button class="math-header-button">Menu</button>
             <img  src="@/assets/menuIcon.svg" alt="">
-            <button class="math-header-button">Restart</button>
+            <button class="math-header-button" v-on:click="restartBoard()">Restart</button>
         </div>
         <div class="math-body-container">
-            <PlayerStatus player="1" name="player 1"/>
-            <MathBoard :player="player" :changePlayer="changePlayer"/>
-            <PlayerStatus player="2" name="player 2"/>
+            <PlayerStatus player="1" name="player 1" :score="player1Score"/>
+            <MathBoard :playerWin="playerWin" v-if="showBoard" :player="player" :changePlayer="changePlayer"/>
+            <div v-else class="math-board-placeholder"></div>
+            <PlayerStatus player="2" name="player 2" :score="player2Score"/>
         </div>
-        <div class="math-round-container">
+        <div class="math-round-container" v-if="!roundWinner">
             <img class="math-round-icon" v-show="player == 1" src="@/assets/round-icon.svg" alt="">
             <img class="math-round-icon" v-show="player == 2" src="@/assets/round-icon-yellow.svg" alt="">
             <div class="math-round-text-container">
                <h3 class="math-round-text">{{ player == 1 ? 'Jogador 1' : 'Jogador 2' }}</h3>
                <h2 class="math-round-text">{{time}}s</h2> 
             </div>
-            
         </div>
+        <div class="math-round-container" v-else>
+            <div class="math-round-winner">
+                <h3 >{{ roundWinner == 1 ? 'Jogador 1' : 'Jogador 2' }}</h3>
+                <h1 >Vitoria</h1> 
+                <button class="math-header-button" v-on:click="restartBoard()">Jogar de novo</button>
+            </div>
+        </div>
+        <div class="math-footer" :style="getFooterBackground()"></div>
     </div>
 </template>
 
@@ -35,8 +43,13 @@ export default {
     data () {
         return {
             player: 1,
+            player1Score: 0,
+            player2Score: 0,
             time: 50,
-            round: 1
+            round: 1,
+            showBoard: true,
+            runTimer: true,
+            roundWinner: undefined
         }
     },
     watch:{
@@ -45,6 +58,27 @@ export default {
         }
     },
     methods:{
+        getFooterBackground () {
+            if(this.roundWinner == 1) return 'background-color: #FD6687'
+            else if (this.roundWinner == 2) return 'background-color: #FFCE67'
+        },
+        playerWin (player) {
+            if (player == 1) this.player1Score++
+            else this.player2Score++
+            this.runTimer = false
+            this.roundWinner = player
+            // this.restartBoard()
+        },
+        restartBoard () {
+            this.showBoard = false
+            setTimeout(() => {
+                this.showBoard = true
+                this.roundWinner = undefined
+                this.runTimer = true
+                this.round = 1
+                this.reduceTime(50, 1)
+            }, 50);
+        },
         changePlayer() {
             if (this.player == 1) this.player = 2
             else this.player = 1
@@ -52,6 +86,7 @@ export default {
             this.reduceTime(50, this.round)
         },
         reduceTime(localTime, localRound) {
+            if (!this.runTimer) return
             this.time = localTime
             localTime--
             setTimeout(() => {
@@ -102,7 +137,8 @@ export default {
 .math-round-container{
     display: flex;
     justify-content: center;
-    min-height: 180px;
+    position: absolute;
+    width: 100%;
 }
 .math-round-icon{
     position: absolute;
@@ -117,6 +153,29 @@ export default {
     position: absolute;
     z-index: 7;
     text-align: center;
+}
+.math-board-placeholder{
+    width: 632px;
+    height: 594px;
+}
+.math-footer{
+    background-color: #5C2DD5;
+    min-height: 35vh;
+    margin-top: -5vh;
+    border-radius: 70px 70px 0 0;
+}
+.math-round-winner{
+    background-color: white;
+    border: 2px solid black;
+    box-shadow: 0 0.4em black;
+    min-height: 150px;
+    width: 20vw;
+    position: absolute;
+    z-index: 6;
+    margin-top: -5vh;
+    border-radius: 20px;
+    text-align: center;
+    padding: 1vh 0;
 }
 
 @media screen and (max-width: 550px) and (orientation: Portrait) {
