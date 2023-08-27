@@ -1,5 +1,5 @@
 <template>
-    <div class="player-status-container">
+    <div class="player-status-container" :class="{'status-mobile': isMobile, 'status-desktop': !isMobile}">
         <img v-if="player == '1'" class="player-status-icon" src="@/assets/player-one.svg" alt="">
         <img v-if="player == '2'" class="player-status-icon" src="@/assets/player-two.svg" alt="">
         <img v-if="player == 'cpu'" class="player-status-icon" src="@/assets/cpu.svg" alt="">
@@ -11,7 +11,7 @@
 <script>
 export default {
     name: 'PlayerStatus',
-    props:['player', 'name', 'score']
+    props:['player', 'name', 'score', "isMobile"]
 }
 </script>
 
@@ -31,10 +31,33 @@ export default {
     width: 35%;
     margin-top: -15%;
 }
+.status-mobile{
+    display: none;
+}
 
 @media screen and (((max-width: 1050px) and (orientation: Portrait)) or ((max-width: 800px) and (orientation: landscape)))  {
-  .player-status-container{
+  .status-desktop{
     display: none;
   }
+  .status-mobile{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 35vw;
+    height: 10vh;
+    box-sizing: border-box;
+    padding-right: 5%;
+  }
+  .player-status-icon{
+    margin-top: 0;
+    margin-left: -10%;
+    width: 25%;
+  }
+}
+
+@media screen and (max-width: 550px) and (orientation: Portrait){
+    .status-mobile{
+        width: 40vw;
+    }
 }
 </style>

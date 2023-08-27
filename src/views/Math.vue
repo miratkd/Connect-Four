@@ -3,7 +3,11 @@
         <div class="math-header-container">
             <button class="math-header-button">Menu</button>
             <img  src="@/assets/menuIcon.svg" alt="">
-            <button class="math-header-button" v-on:click="restartBoard()">Restart</button>
+            <button class="math-header-button" v-on:click="restartGame()">Restart</button>
+        </div>
+        <div class="math-mobile-status">
+            <PlayerStatus :isMobile="true" player="1" name="player 1" :score="player1Score"/>
+            <PlayerStatus :isMobile="true" player="2" name="player 2" :score="player2Score"/>
         </div>
         <div class="math-body-container">
             <PlayerStatus player="1" name="player 1" :score="player1Score"/>
@@ -69,7 +73,11 @@ export default {
             else this.player2Score++
             this.runTimer = false
             this.roundWinner = player
-            // this.restartBoard()
+        },
+        restartGame () {
+            this.player1Score = 0
+            this.player2Score = 0
+            this.restartBoard()
         },
         restartBoard () {
             this.showBoard = false
@@ -116,6 +124,9 @@ export default {
     justify-content: space-evenly;
     padding-top: 5vh;
     align-items: center;
+}
+.math-mobile-status{
+    display: none;
 }
 .math-header-button{
     color: white;
@@ -181,20 +192,32 @@ export default {
 }
 .math-footer-container{
     position: absolute;
-    top: 0;
+    top: 20vh;
     left: 0;
     width: 100%;
-    height: 120vh;
+    height: 100vh;
     display: flex;
     flex-direction: column-reverse;
 }
 
 @media screen and (min-height: 850px) {
     .math-footer-container{
-        height: 100vh;
+        height: 80vh;
     }
     .math-footer{
         min-height: 25vh;
+    }
+}
+
+@media screen and (max-width: 1050px) and (orientation: Portrait){
+    .math-round-winner{
+        width: 40vw;
+    }
+    .math-mobile-status{
+        display: flex;
+        justify-content: center;
+        gap: 5vw;
+        margin-top: 5vh;
     }
 }
 @media screen and (max-width: 550px) and (orientation: Portrait) {
@@ -203,6 +226,12 @@ export default {
     }
     .math-round-text-container{
         margin-top: 3vh;
+    }
+    .math-footer-container{
+        height: 85vh;
+    }
+    .math-round-winner{
+        width: 60vw;
     }
 }
 </style>

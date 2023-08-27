@@ -116,7 +116,15 @@ export default {
             if(coin.position.y < 3 && 
             this.coins[(coin.position.x) + (coin.position.y+1) * 7].player == coin.player &&
             this.coins[(coin.position.x) + (coin.position.y+2) * 7].player == coin.player &&
-            this.coins[(coin.position.x) + (coin.position.y+3) * 7].player == coin.player) isWin = true
+            this.coins[(coin.position.x) + (coin.position.y+3) * 7].player == coin.player) {
+                isWin = true
+                winnerCoins = [
+                    coin,
+                    this.coins[(coin.position.x) + (coin.position.y+1) * 7],
+                    this.coins[(coin.position.x) + (coin.position.y+2) * 7],
+                    this.coins[(coin.position.x) + (coin.position.y+3) * 7]
+                ]
+            }
 
             console.log('---');
             if(xLine.length > 3) {
@@ -234,6 +242,12 @@ export default {
     margin-left: 2%;
 }
 
+@media screen and (max-width: 1050px) and (orientation: Portrait){
+    .math-hover-icon{
+        visibility: hidden;
+    }
+}
+
 @media screen and (max-width: 550px) and (orientation: Portrait) {
     .board-container{
         height: 310px;
@@ -256,6 +270,11 @@ export default {
         width: 38px;
         height: 38px;
         margin-top: 1%;
+    }
+    .coin-win-icon{
+        width: 15px;
+        height: 15px;
+        margin-top: 2.5%;
     }
 }
 </style>
