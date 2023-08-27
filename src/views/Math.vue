@@ -26,7 +26,9 @@
                 <button class="math-header-button" v-on:click="restartBoard()">Jogar de novo</button>
             </div>
         </div>
-        <div class="math-footer" :style="getFooterBackground()"></div>
+        <div class="math-footer-container">
+            <div class="math-footer" :style="getFooterBackground()"></div>
+        </div>
     </div>
 </template>
 
@@ -133,6 +135,7 @@ export default {
     align-items: center;
     justify-content: center;
     margin-top: 5vh;
+    gap: 2vw;
 }
 .math-round-container{
     display: flex;
@@ -160,8 +163,7 @@ export default {
 }
 .math-footer{
     background-color: #5C2DD5;
-    min-height: 35vh;
-    margin-top: -5vh;
+    min-height: 30vh;
     border-radius: 70px 70px 0 0;
 }
 .math-round-winner{
@@ -177,7 +179,24 @@ export default {
     text-align: center;
     padding: 1vh 0;
 }
+.math-footer-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120vh;
+    display: flex;
+    flex-direction: column-reverse;
+}
 
+@media screen and (min-height: 850px) {
+    .math-footer-container{
+        height: 100vh;
+    }
+    .math-footer{
+        min-height: 25vh;
+    }
+}
 @media screen and (max-width: 550px) and (orientation: Portrait) {
     .math-round-icon{
         margin-top: -4vh;

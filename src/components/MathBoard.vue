@@ -50,8 +50,8 @@ export default {
             let isWin = false
             let winnerCoins = []
             let xLine = [coin]
-            let accendLine = 1
-            let descendLine = 1
+            let accendLine = [coin]
+            let descendLine = [coin]
             // pegar valores a direita
             if (coin.position.x + 1 < 7 && this.coins[(coin.position.x+1) + coin.position.y * 7].player == coin.player) {
                 xLine.push(this.coins[(coin.position.x+1) + coin.position.y * 7])
@@ -64,21 +64,21 @@ export default {
             }
             // pegar valores a Direita-Cima
             if (coin.position.x + 1 < 7 && coin.position.y - 1 > -1 && this.coins[(coin.position.x+1) + (coin.position.y-1) * 7].player == coin.player){
-                accendLine++
+                accendLine.push(this.coins[(coin.position.x+1) + (coin.position.y-1) * 7])
                 if (coin.position.x + 2 < 7 && coin.position.y - 2 > -1 && this.coins[(coin.position.x+2) + (coin.position.y-2) * 7].player == coin.player){
-                    accendLine++
+                    accendLine.push(this.coins[(coin.position.x+2) + (coin.position.y-2) * 7])
                     if (coin.position.x + 3 < 7 && coin.position.y - 3 > -1 && this.coins[(coin.position.x+3) + (coin.position.y-3) * 7].player == coin.player){
-                        accendLine++
+                        accendLine.push(this.coins[(coin.position.x+3) + (coin.position.y-3) * 7])
                     }
                 }
             }
             // pegar valores Direita-Baixo
             if(coin.position.x + 1 < 7 && coin.position.y + 1 < 6 && this.coins[(coin.position.x+1) + (coin.position.y+1) * 7].player == coin.player){
-                descendLine++
+                descendLine.push(this.coins[(coin.position.x+1) + (coin.position.y+1) * 7])
                 if(coin.position.x + 2 < 7 && coin.position.y + 2 < 6 && this.coins[(coin.position.x+2) + (coin.position.y+2) * 7].player == coin.player){
-                    descendLine++
+                    descendLine.push(this.coins[(coin.position.x+2) + (coin.position.y+2) * 7])
                     if(coin.position.x + 3 < 7 && coin.position.y + 3 < 6 && this.coins[(coin.position.x+3) + (coin.position.y+3) * 7].player == coin.player){
-                        descendLine++
+                        descendLine.push(this.coins[(coin.position.x+3) + (coin.position.y+3) * 7])
                     }
                 }
             }
@@ -94,21 +94,21 @@ export default {
             }
             // pegar valores a esquerda-cima
             if(coin.position.x - 1 > -1 && coin.position.y - 1 > -1 && this.coins[(coin.position.x-1) + (coin.position.y-1) * 7].player == coin.player ) {
-                descendLine++
+                descendLine.push(this.coins[(coin.position.x-1) + (coin.position.y-1) * 7])
                 if(coin.position.x - 2 > -1 && coin.position.y - 2 > -1 && this.coins[(coin.position.x-2) + (coin.position.y-2) * 7].player == coin.player ) {
-                    descendLine++
+                    descendLine.push(this.coins[(coin.position.x-2) + (coin.position.y-2) * 7])
                     if(coin.position.x - 3 > -1 && coin.position.y - 3 > -1 && this.coins[(coin.position.x-3) + (coin.position.y-3) * 7].player == coin.player ) {
-                        descendLine++
+                        descendLine.push(this.coins[(coin.position.x-3) + (coin.position.y-3) * 7])
                     }
                 }
             }
             // pegar valores esquerda-baixo
             if(coin.position.x - 1 > -1 && coin.position.y + 1 < 6 && this.coins[(coin.position.x-1) + (coin.position.y+1) * 7].player == coin.player){
-                accendLine++
+                accendLine.push(this.coins[(coin.position.x-1) + (coin.position.y+1) * 7])
                 if(coin.position.x - 2 > -1 && coin.position.y + 2 < 6 && this.coins[(coin.position.x-2) + (coin.position.y+2) * 7].player == coin.player){
-                    accendLine++
+                    accendLine.push(this.coins[(coin.position.x-2) + (coin.position.y+2) * 7])
                     if(coin.position.x - 3 > -1 && coin.position.y + 3 < 6 && this.coins[(coin.position.x-3) + (coin.position.y+3) * 7].player == coin.player){
-                        accendLine++
+                        accendLine.push(this.coins[(coin.position.x-3) + (coin.position.y+3) * 7])
                     }
                 }
             }
@@ -123,15 +123,21 @@ export default {
                 isWin = true
                 winnerCoins = xLine
             }
-            if(accendLine > 3) isWin = true
-            if(descendLine > 3) isWin = true
+            if(accendLine.length > 3) {
+                isWin = true
+                winnerCoins = accendLine
+            }
+            if(descendLine.length > 3) {
+                isWin = true
+                winnerCoins = descendLine
+            }
             if(isWin) console.log('Partida acabou');
             if (isWin) {
                 this.isOver = true
                 setTimeout(() => {
                     this.playerWin(coin.player)
                     this.winnerCoins = winnerCoins
-                }, 1200);
+                }, 1400);
                 
             }
         },
