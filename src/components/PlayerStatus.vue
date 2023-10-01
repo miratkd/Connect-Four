@@ -1,10 +1,10 @@
 <template>
     <div class="player-status-container" :class="{'status-mobile': isMobile, 'status-desktop': !isMobile}">
-        <img v-if="player == '1'" class="player-status-icon" src="@/assets/player-one.svg" alt="">
-        <img v-if="player == '2'" class="player-status-icon" src="@/assets/player-two.svg" alt="">
-        <img v-if="player == 'cpu'" class="player-status-icon" src="@/assets/cpu.svg" alt="">
-        <h3 style="margin-top: 1vh;">{{ name }}</h3>
-        <h1>{{ score }}</h1>
+        <img data-test="player-icon-1" v-if="player == '1'" class="player-status-icon" src="@/assets/player-one.svg" alt="">
+        <img data-test="player-icon-2" v-if="player == '2'" class="player-status-icon" src="@/assets/player-two.svg" alt="">
+        <img data-test="player-icon-cpu" v-if="player == 'cpu'" class="player-status-icon" src="@/assets/cpu.svg" alt="">
+        <h3 style="margin-top: 1vh;" data-test="player-name">{{ name }}</h3>
+        <h1 data-test="player-score">{{ score }}</h1>
     </div>
 </template>
 

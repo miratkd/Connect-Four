@@ -15,7 +15,7 @@ const routes = [
     component: Rules
   },
   {
-    path: '/partida',
+    path: '/partida/:cpu?',
     name: 'mathPage',
     component: Math
   },

@@ -18,7 +18,7 @@ export default {
     },
     methods:{
         cpuClick () {
-            this.$router.push('/partida')
+            this.$router.push('/partida/cpu')
         },
         playerClick () {
             this.$router.push('/partida')

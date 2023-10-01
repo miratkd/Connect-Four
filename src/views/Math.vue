@@ -1,9 +1,9 @@
 <template>
     <div class="math-container">
         <div class="math-header-container">
-            <button class="math-header-button">Menu</button>
+            <button class="math-header-button" v-on:click="() => showMenuAlert = true">Menu</button>
             <img  src="@/assets/menuIcon.svg" alt="">
-            <button class="math-header-button" v-on:click="restartGame()">Restart</button>
+            <button class="math-header-button" v-on:click="restartAlertClick()">Restart</button>
         </div>
         <div class="math-mobile-status">
             <PlayerStatus :isMobile="true" player="1" name="player 1" :score="player1Score"/>
@@ -11,9 +11,9 @@
         </div>
         <div class="math-body-container">
             <PlayerStatus player="1" name="player 1" :score="player1Score"/>
-            <MathBoard :playerWin="playerWin" v-if="showBoard" :player="player" :changePlayer="changePlayer"/>
+            <MathBoard :isCpuMatch="isCpuMatch" :playerWin="playerWin" v-if="showBoard" :player="player" :changePlayer="changePlayer"/>
             <div v-else class="math-board-placeholder"></div>
-            <PlayerStatus player="2" name="player 2" :score="player2Score"/>
+            <PlayerStatus :player="isCpuMatch ? 'cpu' : 2" :name="isCpuMatch ? 'CPU' : 'player 2'" :score="player2Score"/>
         </div>
         <div class="math-round-container" v-if="!roundWinner">
             <img class="math-round-icon" v-show="player == 1" src="@/assets/round-icon.svg" alt="">
@@ -33,18 +33,25 @@
         <div class="math-footer-container">
             <div class="math-footer" :style="getFooterBackground()"></div>
         </div>
+
+        <RestartAlert v-if="showRestartAlert" :close="() => showRestartAlert = false" :submit="restartGame" />
+        <MenuAlert v-if="showMenuAlert" :close="() => showMenuAlert = false" :submit="cancelGame" />
     </div>
 </template>
 
 <script>
 import PlayerStatus from '@/components/PlayerStatus.vue';
 import MathBoard from '@/components/MathBoard.vue';
+import RestartAlert from '@/components/RestartAlert.vue';
+import MenuAlert from '@/components/MenuAlert.vue'
 
 export default {
     name: 'MathView',
     components:{
         PlayerStatus,
-        MathBoard
+        MathBoard,
+        RestartAlert,
+        MenuAlert
     },
     data () {
         return {
@@ -55,12 +62,10 @@ export default {
             round: 1,
             showBoard: true,
             runTimer: true,
-            roundWinner: undefined
-        }
-    },
-    watch:{
-        round (newValue){
-            console.log('Round: ' + newValue);
+            roundWinner: undefined,
+            showRestartAlert: false,
+            showMenuAlert: false,
+            isCpuMatch: false
         }
     },
     methods:{
@@ -73,6 +78,12 @@ export default {
             else this.player2Score++
             this.runTimer = false
             this.roundWinner = player
+        },
+        cancelGame () {
+            this.$router.push('/')
+        },
+        restartAlertClick () {
+            this.showRestartAlert = true
         },
         restartGame () {
             this.player1Score = 0
@@ -87,6 +98,7 @@ export default {
                 this.runTimer = true
                 this.round = 1
                 this.reduceTime(50, 1)
+                this.showRestartAlert = false
             }, 50);
         },
         changePlayer() {
@@ -109,6 +121,8 @@ export default {
         }
     },
     mounted () {
+        console.log('init');
+        if(this.$route.params.cpu) this.isCpuMatch = true
         this.reduceTime(50, 1)
     }
 }
@@ -158,6 +172,7 @@ export default {
     position: absolute;
     z-index: 6;
     margin-top: -5vh;
+    height: 15vh;
 }
 .math-round-text{
     color: white;
@@ -225,7 +240,7 @@ export default {
         margin-top: -4vh;
     }
     .math-round-text-container{
-        margin-top: 3vh;
+        margin-top: 1vh;
     }
     .math-footer-container{
         height: 85vh;

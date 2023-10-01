@@ -5,7 +5,9 @@
 
         <img v-for="coin in coins" :key="coin.id" :id="`yellow-coin-${coin.id}`" class="board-coin" src="@/assets/yellowCoin.svg" alt="">
         <img v-for="coin in coins" :key="coin.id" :id="`pink-coin-${coin.id}`" class="board-coin" src="@/assets/pinkCoin.svg" alt="">
-        <div class="coin-hitbox" v-on:click="coinClick(coin)" v-on:mouseleave="hitboxleave(coin.position.x)" v-on:mouseover="hitboxHover(coin.position.x)" :style="getCoinPosition(coin.position.x, coin.position.y)" v-for="coin in coins" :key="coin.id"></div>
+
+        <div class="coin-hitbox" :data-test="'hitbox-'+coin.id" v-on:click="userCoinClick(coin)" v-on:mouseleave="hitboxleave(coin.position.x)" v-on:mouseover="hitboxHover(coin.position.x)" :style="getCoinPosition(coin.position.x, coin.position.y)" v-for="coin in coins" :key="coin.id"></div>
+
         <img v-for="number in [0,1,2,3,4,5,6]" :key="number" :id="'hover-id-'+number" :style="'left: ' + xPosition[number] + '%'" class="math-hover-icon" src="@/assets/hoverIcon.svg" alt="">
         <div v-for="winnerCoin in winnerCoins" :key="winnerCoin.id" :style="getCoinPosition(winnerCoin.position.x, winnerCoin.position.y)" class="coin-win-icon"></div>
     </div>
@@ -14,7 +16,7 @@
 <script>
 export default {
     name:'MathBoard',
-    props:['player', 'changePlayer', 'playerWin'],
+    props:['player', 'changePlayer', 'playerWin', 'isCpuMatch'],
     data () {
         return {
             xPosition: [3, 16.5, 30.5, 44.5, 58.4, 72.3, 86.3],
@@ -24,9 +26,75 @@ export default {
             winnerCoins: []
         }
     },
+    watch:{
+        player () {
+            if (this.isCpuMatch && this.player != 1) setTimeout(this.cpuCoinClick, 1500);
+        }
+    },
     methods:{
         getCoinPosition (x,y){
             return `top: ${this.yPosition[y]}%; left: ${this.xPosition[x]}%;`
+        },
+        userCoinClick (coin) {
+            if (this.isCpuMatch && this.player != 1) return
+            this.coinClick(coin)
+        },
+        cpuCoinClick () {
+            const nextMove = this.testVerticalLine()
+            if (nextMove) {
+                console.log('next move found!');
+                console.log(nextMove);
+                this.coinClick(nextMove)
+                return
+            }
+            let xList = [0,1,2,3,4,5,6]
+            for (let index = 0; index < 7; index++) {
+                const tryNumber = this.getRndInteger(0,xList.length)
+                xList.slice(tryNumber,1)
+                console.log(tryNumber);
+                const tryCoin = this.getColumHeigth(tryNumber)
+                if (tryCoin){
+                    this.coinClick(this.coins[tryNumber])
+                    break
+                }
+            }
+            // while (findCoin) {
+            //     const tryNumber = Math.floor(Math.random(0,7) * 100)
+            //     const tryCoin = console.log(this.getColumHeigth(tryNumber))
+            //     if
+            //     this.coinClick(this.coins[0])
+            // }
+            
+        },
+        getRndInteger(min, max) {
+            return Math.floor(Math.random() * (max - min) ) + min;
+        },
+        testVerticalLine(){
+            for (let x = 0; x < 7; x++) {
+                console.log('testing colum: ' + x);
+                let lastCoin = undefined
+                let coinStreak = 0
+                let resp = undefined
+                for (let y = 5; y > -1; y--) {
+                    const coin = this.coins[x + y * 7].player
+                    if (!coin) break
+                    if (!lastCoin && coinStreak == 0) {
+                        lastCoin = coin
+                        coinStreak++
+                    } else if (lastCoin == coin) coinStreak++
+                    else {
+                        lastCoin = coin
+                        coinStreak = 1
+                    }
+                }
+                if (coinStreak == 3) resp = this.getColumHeigth(x)
+                console.log(coinStreak);
+                if (resp) {
+                    return resp
+                }
+                console.log('---------');
+
+            }
         },
         coinClick (coin) {
             coin = this.getColumHeigth(coin.position.x)
