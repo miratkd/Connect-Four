@@ -2,9 +2,9 @@
     <div class="main-menu-container">
         <div class="main-menu-body">
             <img class="main-menu-icon" src="@/assets/menuIcon.svg" alt="">
-            <MenuButton :action="cpuClick" :cpuMatch="true" text="PLAY VS CPU" style="margin-top: 2vh;"/>
-            <MenuButton :action="playerClick" :playerMatch="true" text="PLAY VS PLAYER" style="margin-top: 2vh;" />
-            <MenuButton :action="rulesClick" text="GAME RULES" style="margin-top: 2vh;" />
+            <MenuButton :action="cpuClick" :cpuMatch="true" text="PLAYER VS CPU" style="margin-top: 2vh;"/>
+            <MenuButton :action="playerClick" :playerMatch="true" text="PLAYER VS PLAYER" style="margin-top: 2vh;" />
+            <MenuButton :action="rulesClick" text="REGRAS" style="margin-top: 2vh;" />
         </div>
     </div>
 </template>

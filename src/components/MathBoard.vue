@@ -41,37 +41,69 @@ export default {
         },
         cpuCoinClick () {
             const nextMove = this.testVerticalLine()
-            if (nextMove) {
-                console.log('next move found!');
-                console.log(nextMove);
-                this.coinClick(nextMove)
+            const nextMove2 = this.testHorizontalLine()
+            if (nextMove || nextMove2) {
+                if (nextMove) this.coinClick(nextMove)
+                else if (nextMove2) this.coinClick(nextMove2)
                 return
-            }
-            let xList = [0,1,2,3,4,5,6]
-            for (let index = 0; index < 7; index++) {
-                const tryNumber = this.getRndInteger(0,xList.length)
-                xList.slice(tryNumber,1)
-                console.log(tryNumber);
-                const tryCoin = this.getColumHeigth(tryNumber)
-                if (tryCoin){
-                    this.coinClick(this.coins[tryNumber])
-                    break
+            } else {
+                // click random coin
+                let xList = [0,1,2,3,4,5,6]
+                for (let index = 0; index < 7; index++) {
+                    const tryNumber = this.getRndInteger(0,xList.length)
+                    const tryCoin = this.getColumHeigth(xList[tryNumber])
+                    if (tryCoin){
+                        this.coinClick(this.coins[xList[tryNumber]])
+                        break
+                    }
+                    xList.splice(tryNumber,1)
                 }
             }
-            // while (findCoin) {
-            //     const tryNumber = Math.floor(Math.random(0,7) * 100)
-            //     const tryCoin = console.log(this.getColumHeigth(tryNumber))
-            //     if
-            //     this.coinClick(this.coins[0])
-            // }
+
             
         },
         getRndInteger(min, max) {
             return Math.floor(Math.random() * (max - min) ) + min;
         },
+        testHorizontalLine () {
+            for (let y = 5; y > -1; y--) {
+                let coinInit = undefined
+                let coinStreak = 0
+                for (let x = 0; x < 7; x++){
+                    if (this.coins[x + y * 7].player) {
+                        if (!coinInit){
+                            coinInit = this.coins[x + y * 7]
+                            coinStreak++
+                        } else if (coinInit.player == this.coins[x + y * 7].player){
+                            coinStreak++
+                        } else {
+                            coinInit = this.coins[x + y * 7]
+                            coinStreak = 1
+                        }
+                    } else {
+                        coinInit = undefined
+                        coinStreak = 0
+                    }
+                    if (coinStreak == 3) {
+                        break
+                    }
+                }
+                if (coinStreak == 3) {
+                    if (coinInit.position.y < 5 && coinInit.position.x < 4 && !this.coins[coinInit.position.x+3 + coinInit.position.y * 7].player && this.coins[coinInit.position.x+3 + coinInit.position.y+1 * 7].player){
+                        return this.coins[coinInit.position.x+3 + coinInit.position.y * 7]
+                    }
+                    if (coinInit.position.y < 5 && coinInit.position.x > 0 && !this.coins[coinInit.position.x-1 + coinInit.position.y * 7].player && this.coins[coinInit.position.x-1 + coinInit.position.y+1 * 7].player){
+                        return this.coins[coinInit.position.x-1 + coinInit.position.y * 7]
+                    }if (coinInit.position.x > 0 && !this.coins[coinInit.position.x-1 + coinInit.position.y * 7].player){
+                        return this.coins[coinInit.position.x-1 + coinInit.position.y * 7]
+                    }if (coinInit.position.x < 4 && !this.coins[coinInit.position.x+3 + coinInit.position.y * 7].player){
+                        return this.coins[(coinInit.position.x+3) + coinInit.position.y * 7]
+                    }
+                }
+            }
+        },
         testVerticalLine(){
             for (let x = 0; x < 7; x++) {
-                console.log('testing colum: ' + x);
                 let lastCoin = undefined
                 let coinStreak = 0
                 let resp = undefined
@@ -88,12 +120,9 @@ export default {
                     }
                 }
                 if (coinStreak == 3) resp = this.getColumHeigth(x)
-                console.log(coinStreak);
                 if (resp) {
                     return resp
                 }
-                console.log('---------');
-
             }
         },
         coinClick (coin) {
@@ -194,7 +223,6 @@ export default {
                 ]
             }
 
-            console.log('---');
             if(xLine.length > 3) {
                 isWin = true
                 winnerCoins = xLine
@@ -207,7 +235,6 @@ export default {
                 isWin = true
                 winnerCoins = descendLine
             }
-            if(isWin) console.log('Partida acabou');
             if (isWin) {
                 this.isOver = true
                 setTimeout(() => {
@@ -255,6 +282,9 @@ export default {
             } else x++
         }
     },
+    created () {
+        if (this.isCpuMatch && this.player != 1) setTimeout(this.cpuCoinClick, 500);
+    }
 }
 </script>
 
