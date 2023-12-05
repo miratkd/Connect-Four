@@ -1,29 +1,15 @@
-# connect-four
+# Connect-Four
 
-## Project setup
-```
-npm install
-```
+Lembra de passar horas jogando connect four quando era criança? Não? Nem eu... mas em algum lugar do mundo esse joguinho deve ter sido popular.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Ficou curioso? Clique no link a seguir e de uma olhada:
 
-### Compiles and minifies for production
-```
-npm run build
-```
+[Connect-Four](https://connect-four-lm.netlify.app/)
 
-### Run your unit tests
-```
-npm run test:unit
-```
+Aqui uma pequena prévia do que você vai encontrar:
 
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+![Menu](https://raw.githubusercontent.com/miratkd/Connect-Four/main/src/assets/readmeImages/menu.png)
+![math1](https://raw.githubusercontent.com/miratkd/Connect-Four/main/src/assets/readmeImages/math1.png)
+![win1](https://raw.githubusercontent.com/miratkd/Connect-Four/main/src/assets/readmeImages/win1.png)
+![math2](https://raw.githubusercontent.com/miratkd/Connect-Four/main/src/assets/readmeImages/math2.png)
+![win2](https://raw.githubusercontent.com/miratkd/Connect-Four/main/src/assets/readmeImages/win2.png)
