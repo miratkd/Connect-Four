@@ -1,9 +1,9 @@
 <template>
     <div class="math-container">
         <div class="math-header-container">
-            <button class="math-header-button" v-on:click="() => showMenuAlert = true">Menu</button>
+            <button data-test="math-menu-button" class="math-header-button" v-on:click="() => showMenuAlert = true">Menu</button>
             <img  src="@/assets/menuIcon.svg" alt="">
-            <button class="math-header-button" v-on:click="restartAlertClick()">Restart</button>
+            <button data-test="math-restart-button" class="math-header-button" v-on:click="restartAlertClick()">Restart</button>
         </div>
         <div class="math-mobile-status">
             <PlayerStatus :isMobile="true" player="1" name="player 1" :score="player1Score"/>
@@ -16,18 +16,18 @@
             <PlayerStatus :player="isCpuMatch ? 'cpu' : 2" :name="isCpuMatch ? 'CPU' : 'player 2'" :score="player2Score"/>
         </div>
         <div class="math-round-container" v-if="!roundWinner">
-            <img class="math-round-icon" v-show="player == 1" src="@/assets/round-icon.svg" alt="">
-            <img class="math-round-icon" v-show="player == 2" src="@/assets/round-icon-yellow.svg" alt="">
+            <img class="math-round-icon" data-test="player-1-round-icon" v-show="player == 1" src="@/assets/round-icon.svg" alt="">
+            <img class="math-round-icon" data-test="player-2-round-icon" v-show="player == 2" src="@/assets/round-icon-yellow.svg" alt="">
             <div class="math-round-text-container">
-               <h3 class="math-round-text">{{ player == 1 ? 'Jogador 1' : 'Jogador 2' }}</h3>
+               <h3 data-test="math-round-player" class="math-round-text">{{ player == 1 ? 'Jogador 1' : 'Jogador 2' }}</h3>
                <h2 class="math-round-text">{{time}}s</h2> 
             </div>
         </div>
         <div class="math-round-container" v-else>
-            <div class="math-round-winner">
+            <div data-test="math-winner-container" class="math-round-winner">
                 <h3 >{{ roundWinner == 1 ? 'Jogador 1' : 'Jogador 2' }}</h3>
                 <h1 >Vitoria</h1> 
-                <button class="math-header-button" v-on:click="restartBoard()">Jogar de novo</button>
+                <button class="math-header-button" data-test="next-round-button" v-on:click="restartBoard()">Jogar de novo</button>
             </div>
         </div>
         <div class="math-footer-container">

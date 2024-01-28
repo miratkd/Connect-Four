@@ -1,9 +1,9 @@
 <template>
-    <div class="restart-alert-container" v-on:click="close">
+    <div data-test="menu-alert" class="restart-alert-container" v-on:click="close">
         <div class="restart-alert-modal" v-on:click.stop="">
-            <h1>Tem certeza que deseja voltar para o menu principal?</h1>
+            <h1 data-test="menu-alert-title">Tem certeza que deseja voltar para o menu principal?</h1>
             <h2>A partida sera terminada.</h2>
-            <button v-on:click="submit" class="restart-alert-button">Sim, voltar ao menu</button>
+            <button data-test="menu-alert-button" v-on:click="submit" class="restart-alert-button">Sim, voltar ao menu</button>
         </div>
     </div>
 </template>

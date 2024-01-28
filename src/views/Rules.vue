@@ -1,7 +1,7 @@
 <template>
     <div class="rules-container">
         <div class="rules-modal">
-            <h1>Regras</h1>
+            <h1 data-test="rules-title">Regras</h1>
             <h3>Objetivo</h3>
             <p>
                 Ser o primeiro jogador a conectar quatro discos da mesma cor (na vertical, horizontal ou diagonal)
@@ -23,7 +23,7 @@
                 <h4>4</h4>
                 <p>Quem iniciou o jogo anterior em primeiro deve jogar em segundo agora.</p>
             </div>
-            <div v-on:click="back()" class="rules-check-container">
+            <div v-on:click="back()" data-test="rules-check" class="rules-check-container">
                 <span class="material-icons rules-check-icon">done</span>
             </div>
         </div>

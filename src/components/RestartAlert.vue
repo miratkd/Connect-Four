@@ -1,9 +1,9 @@
 <template>
-    <div class="restart-alert-container" v-on:click="close">
+    <div data-test="restart-alert-container" class="restart-alert-container" v-on:click="close">
         <div class="restart-alert-modal" v-on:click.stop="">
             <h1>Tem certeza que deseja reiniciar a partida?</h1>
             <h2>A pontuação dos dois jogadores voltara para 0.</h2>
-            <button v-on:click="submit" class="restart-alert-button">Sim, reiniciar a partida</button>
+            <button data-test="restart-alert-button" v-on:click="submit" class="restart-alert-button">Sim, reiniciar a partida</button>
         </div>
     </div>
 </template>

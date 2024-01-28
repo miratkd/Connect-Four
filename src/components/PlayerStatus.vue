@@ -1,5 +1,5 @@
 <template>
-    <div class="player-status-container" :class="{'status-mobile': isMobile, 'status-desktop': !isMobile}">
+    <div class="player-status-container" :data-test="dataTestName" :class="{'status-mobile': isMobile, 'status-desktop': !isMobile}">
         <img data-test="player-icon-1" v-if="player == '1'" class="player-status-icon" src="@/assets/player-one.svg" alt="">
         <img data-test="player-icon-2" v-if="player == '2'" class="player-status-icon" src="@/assets/player-two.svg" alt="">
         <img data-test="player-icon-cpu" v-if="player == 'cpu'" class="player-status-icon" src="@/assets/cpu.svg" alt="">
@@ -11,7 +11,13 @@
 <script>
 export default {
     name: 'PlayerStatus',
-    props:['player', 'name', 'score', "isMobile"]
+    props:['player', 'name', 'score', "isMobile"],
+    computed:{
+      dataTestName(){
+        if (!this.isMobile) return 'player-container-' + this.player
+        else return ''
+      }
+    }
 }
 </script>
 

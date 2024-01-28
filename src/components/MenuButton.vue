@@ -1,6 +1,6 @@
 <template>
-    <div class="menu-button-container" :class="getContainerClass()" v-on:click="action()">
-        <h2>{{ text }}</h2>
+    <div data-test="menu-buttom" class="menu-button-container" :class="getContainerClass()" v-on:click="action()">
+        <h2 :data-test="getDataTest()">{{ text }}</h2>
         <img class="menu-button-icon" src="@/assets/player-icon.svg" v-if="playerMatch" alt="">
         <img class="menu-button-icon" src="@/assets/cpu-icon.svg" v-if="cpuMatch" alt="">
     </div>
@@ -14,6 +14,11 @@ export default {
         getContainerClass () {
             if (this.playerMatch) return 'menu-button-container-player'
             if (this.cpuMatch) return 'menu-button-container-cpu'
+        },
+        getDataTest(){
+            if (this.playerMatch) return 'player-button'
+            else if (this.cpuMatch) return 'cpu-button'
+            else return 'rules-button'
         }
     }
 }
