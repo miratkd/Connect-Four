@@ -30,7 +30,7 @@ describe('Connect four test', () => {
     cy.get('[data-test="rules-check"]').click()
     cy.location('pathname').should('equal', '/')
   })
-  it.only('test match page', ()=> {
+  it('test match page', ()=> {
     cy.visit('/partida')
 
     // test menu
